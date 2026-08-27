@@ -1,40 +1,75 @@
-# Projet Labyrinthe
+# projet-laby
 
-## Members
-- Antoine El KASSIS
-- Rayan LALAOUI
+Représentation, génération, résolution et affichage de labyrinthes en OCaml, avec
+export vers des fichiers HTML animés.
 
-## Description
+<!-- EDIT : une animation ou une capture d'un labyrinthe résolu, placée ici,
+     vaut mieux que tout le reste du fichier. Le module Gui les génère déjà. -->
 
-Vous trouverz dans ce repartoire l'intégralité des fichiers permetttant de représenter, afficher et résoudre des labyrinthe en ocaml ainsi que la génération de fichiers html animé de toutes ces fonctionalités.<br>
-Chaque module est décomposé en trois fichier : `interface` ,`code (implémentation des fonctions)`, `fichier de test`.<br>
+## Ce que fait le projet
 
+Un labyrinthe est une grille de nœuds reliés ou séparés par des murs. À partir de
+cette structure, le projet permet de générer des labyrinthes, de les résoudre, de
+les lire et de les écrire depuis des fichiers, et de produire un rendu HTML animé
+qui montre le déroulement des algorithmes.
 
-Les modules sont:<br>
-- Node: Gère l'implémentation du type noeud , brique de base des labyrinthe.
+<!-- EDIT : nommer ici les algorithmes de génération et de résolution
+     effectivement implémentés (par exemple exploration exhaustive, fusion de
+     chemins, BFS, DFS...). C'est l'information que cherche un lecteur, et elle
+     n'apparaît nulle part pour l'instant. -->
 
-- Grille : Gère l'implémentation du type grille ainsi que les fonctions associés.
+## Architecture
 
-- Laby : Module principale , contient l'implémentation des labys et des différents algorithmes de générations et de résolutions ainsi que la gestion des entrées/sorties.
+Chaque module suit la même discipline : une interface `.mli`, une implémentation
+`.ml`, et un fichier de test dédié.
 
-- Gui : Gère la génération de fichiers HTML pour l'affichage avancé.
+| Module | Rôle |
+|---|---|
+| `node` | le type nœud, brique de base du labyrinthe |
+| `grid` | le type grille et les fonctions associées |
+| `laby` | module principal : labyrinthes, algorithmes de génération et de résolution, entrées/sorties |
+| `gui` | génération des fichiers HTML pour l'affichage animé |
 
-Le `main` est contenu dans le fichier `maze.ml` qui peut être compilé et exectuer avec les commandes : 
+Le point d'entrée est `maze.ml`.
+
+Séparer systématiquement interface et implémentation force chaque module à
+exposer un contrat minimal : `laby` ne connaît de `grid` que sa signature, ce qui
+permet de faire évoluer les implémentations sans casser le reste.
+
+## Compilation et exécution
+
 ```shell
-dune build 
+dune build
 ./maze.exe [arguments]
 ```
-Ceci creer un dossier _build qui peut être supprimer avec la commande.
-```
+
+Pour nettoyer les fichiers produits par la compilation :
+
+```shell
 dune clean
 ```
 
-Les `.sh` sont la pour faciliter la compilation et l'execution des tests liés aux modules séparemment sauf `clean.sh` qui supprime les fichiers résultant de la compilation.Ceux-ci peuvent être lancés avec la commande :
+Les scripts `.sh` compilent et lancent les tests de chaque module séparément :
+
 ```bash
-bash [filename]
+bash test_laby.sh
 ```
 
-- `/doc` contient le rapport.
-- `/pics` contient les images utilisé comme illustrations dans le rapport.
-- `/test` contient des fichiers de labyrinthes (valide ou pas) utilisé lors des différents tests.
+`clear.sh` supprime les fichiers issus de la compilation.
+
+## Contenu du dépôt
+
+- `Doc/` — le rapport détaillé
+- `test/` — fichiers de labyrinthes, valides ou non, utilisés par les tests
+
+## Rapport
+
+<!-- EDIT : remplacer par le nom exact du fichier présent dans Doc/ -->
+[**Rapport détaillé du projet**](Doc/rapport.pdf) — conception, algorithmes et
+choix d'implémentation.
+
+---
+
+Projet réalisé en binôme avec Rayan Lalaoui, licence double diplôme
+mathématiques-informatique, Université Paris-Saclay.
 
